@@ -1,0 +1,3 @@
+FROM scratch
+ADD target/wasm32-wasi/release/weather_forecast.wasm /
+CMD ["/weather_forecast.wasm"]

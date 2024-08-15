@@ -1,0 +1,41 @@
+apiVersion: node.k8s.io/v1
+kind: RuntimeClass
+metadata:
+  name: wasmedge
+handler: wasmedge
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wasm-weather-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: weather_forecast
+  template:
+    metadata:
+      labels:
+        app: weather_forecast
+      annotations:
+        module.wasm.image/variant: compat-smart
+    spec:
+      containers:
+      - name: weather-demo
+        image: deepu105/weather_forecast:latest
+        ports:
+        - containerPort: 8090
+      runtimeClassName: wasmedge
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: weather_forecast
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8090
