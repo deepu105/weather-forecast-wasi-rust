@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 warp_wasi = "0.3"
-reqwest_wasi = { version = "0.11", features = ["json", "blocking"] }
+reqwest_wasi = { version = "0.11", features = ["json"] }
 tokio_wasi = { version = "1.21", features = ["full"] }
 serde = "1.0"
 serde_derive = "1.0"
